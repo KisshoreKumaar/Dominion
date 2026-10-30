@@ -1,0 +1,26 @@
+# GRIDSENTINEL Python dependencies (pinned for reproducible container builds).
+# Host dev venv runs Python 3.14; the container standardises on Python 3.12
+# (see Dockerfile) where manylinux wheels for the whole scientific stack exist.
+
+# --- Phase 1: grid simulation ---
+pandapower==3.5.4
+numpy==2.4.6
+scipy==1.18.1
+pandas==2.3.3
+networkx==3.6.1
+
+# --- Phase 2: SCADA / Modbus ---
+# 3.8.6 keeps the classic subclassable datastore (getValues/setValues with the
+# function code); 3.15 deprecated it mid-migration to an unfinished API.
+pymodbus==3.8.6
+
+# --- Phase 1/2: live API + WebSocket feed ---
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+websockets==17.1
+
+# --- Phase 3+: detection (scikit-learn used from Phase 4; safe to have early) ---
+scikit-learn==1.7.2
+
+# --- tooling ---
+pytest==9.1.1

@@ -1,0 +1,21 @@
+# GRIDSENTINEL — dev/demo orchestration.
+#
+#   docker compose build
+#   docker compose up gridsentinel          # live API+WS feed on :8000
+#   docker compose run --rm gridsentinel python scripts/run_demo.py --scada
+#   docker compose run --rm tests           # full test suite
+#
+services:
+  gridsentinel:
+    build: .
+    image: gridsentinel:dev
+    ports:
+      - "8000:8000"          # live API + WebSocket
+      - "5020-5027:5020-5027" # RTU Modbus/TCP servers
+    command: python scripts/run_demo.py --api --port 8000
+
+  # One-shot: run the test suite in the container.
+  tests:
+    image: gridsentinel:dev
+    build: .
+    command: python -m pytest tests/ -v
